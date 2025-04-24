@@ -25,7 +25,7 @@
           label="操作"
           width="100">
         <template slot-scope="scope">
-          <el-popconfirm
+          <!-- <el-popconfirm
               confirm-button-text='删除'
               cancel-button-text='取消'
               icon="el-icon-info"
@@ -34,7 +34,7 @@
               @confirm="deleteTeacher(scope.row)"
           >
             <el-button slot="reference" type="text" size="small">删除</el-button>
-          </el-popconfirm>
+          </el-popconfirm> -->
           <el-button @click="editor(scope.row)" type="text" size="small">编辑</el-button>
         </template>
       </el-table-column>
