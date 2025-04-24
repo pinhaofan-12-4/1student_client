@@ -131,7 +131,7 @@ export default {
       const randomWeekday = weekdays[Math.floor(Math.random() * weekdays.length)];
       const randomHour = hours[Math.floor(Math.random() * hours.length)];
       
-      return `星期${randomWeekday}${randomHour}`;
+      return `星期${randomWeekday} ${randomHour}`;
     }
   },
 
