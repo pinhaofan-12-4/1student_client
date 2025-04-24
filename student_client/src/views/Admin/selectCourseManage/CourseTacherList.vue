@@ -10,7 +10,7 @@
           fixed
           prop="cid"
           label="课号"
-          width="150">
+          width="50">
       </el-table-column>
       <el-table-column
           prop="cname"
