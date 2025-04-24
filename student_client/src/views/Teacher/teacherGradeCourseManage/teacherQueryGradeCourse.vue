@@ -188,16 +188,21 @@ export default {
     },
     submitBatchGrades() {
       const that = this
-      const grades = this.batchForm.students.map(student => ({
-        sid: student.sid,
-        cid: this.batchForm.cid,
-        tid: sessionStorage.getItem('tid'),
-        term: this.batchForm.term,
-        grade: student.grade
-      }))
+      const grades = this.batchForm.students
+      const cid = this.batchForm.cid
+      const tid = sessionStorage.getItem('tid')
+      const term = this.batchForm.term
       
-      axios.post('http://localhost:10086/SCT/batchUpdateGrades', grades).then(function (resp) {
-        if (resp.data === true) {
+      // 使用Promise.all处理多个请求
+      const promises = grades.map(student => {
+        return axios.get("http://localhost:10086/SCT/updateById/" + student.sid + '/' + cid + '/' + tid + '/' + term + '/' + student.grade)
+      })
+      
+      Promise.all(promises).then(responses => {
+        // 检查所有响应是否都成功
+        const allSuccess = responses.every(resp => resp.data === true)
+        
+        if (allSuccess) {
           that.$message({
             showClose: true,
             message: '成绩保存成功',
@@ -209,10 +214,16 @@ export default {
         } else {
           that.$message({
             showClose: true,
-            message: '成绩保存失败',
+            message: '部分或全部成绩保存失败',
             type: 'error'
           })
         }
+      }).catch(() => {
+        that.$message({
+          showClose: true,
+          message: '成绩保存失败',
+          type: 'error'
+        })
       })
     }
   }
