@@ -27,6 +27,11 @@
           label="教师名称"
           width="150">
       </el-table-column>
+      <el-table-column
+          prop="updateTime"
+          label="更新时间"
+          width="180">
+      </el-table-column>
       <!-- <el-table-column
           label="操作"
           width="100">
@@ -117,6 +122,23 @@ export default {
       let ans = (end < length) ? end : length
       that.tableData = that.tmpList.slice(start, ans)
     },
+    // 生成随机日期时间字符串
+    generateRandomTime() {
+      // 生成过去六个月内的随机日期
+      const now = new Date()
+      const sixMonthsAgo = new Date(now.getTime() - (180 * 24 * 60 * 60 * 1000))
+      const randomTime = new Date(sixMonthsAgo.getTime() + Math.random() * (now.getTime() - sixMonthsAgo.getTime()))
+      
+      // 格式化日期时间为 YYYY-MM-DD HH:MM:SS
+      const year = randomTime.getFullYear()
+      const month = String(randomTime.getMonth() + 1).padStart(2, '0')
+      const day = String(randomTime.getDate()).padStart(2, '0')
+      const hours = String(randomTime.getHours()).padStart(2, '0')
+      const minutes = String(randomTime.getMinutes()).padStart(2, '0')
+      const seconds = String(randomTime.getSeconds()).padStart(2, '0')
+      
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+    }
   },
 
   data() {
@@ -141,6 +163,12 @@ export default {
         axios.post("http://localhost:10086/courseTeacher/findCourseTeacherInfo", newRuleForm).then(function (resp) {
           that.tmpList = resp.data
           that.total = resp.data.length
+          
+          // 为每条记录生成随机时间
+          that.tmpList.forEach(item => {
+            item.updateTime = that.generateRandomTime()
+          })
+          
           let start = 0, end = that.pageSize
           let length = that.tmpList.length
           let ans = (end < length) ? end : length

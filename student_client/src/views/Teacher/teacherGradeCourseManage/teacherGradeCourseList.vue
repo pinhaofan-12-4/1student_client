@@ -38,11 +38,6 @@
           width="100">
       </el-table-column>
       <el-table-column
-          prop="updateTime"
-          label="更新时间"
-          width="180">
-      </el-table-column>
-      <el-table-column
           label="操作"
           width="100">
         <template slot-scope="scope">
@@ -88,23 +83,6 @@ export default {
           term: row.term
         }
       })
-    },
-    // 生成随机日期时间字符串
-    generateRandomTime() {
-      // 生成过去三个月内的随机日期
-      const now = new Date()
-      const threeMonthsAgo = new Date(now.getTime() - (90 * 24 * 60 * 60 * 1000))
-      const randomTime = new Date(threeMonthsAgo.getTime() + Math.random() * (now.getTime() - threeMonthsAgo.getTime()))
-      
-      // 格式化日期时间为 YYYY-MM-DD HH:MM:SS
-      const year = randomTime.getFullYear()
-      const month = String(randomTime.getMonth() + 1).padStart(2, '0')
-      const day = String(randomTime.getDate()).padStart(2, '0')
-      const hours = String(randomTime.getHours()).padStart(2, '0')
-      const minutes = String(randomTime.getMinutes()).padStart(2, '0')
-      const seconds = String(randomTime.getSeconds()).padStart(2, '0')
-      
-      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
     }
   },
   data() {
@@ -133,12 +111,6 @@ export default {
           console.log(resp)
           that.tmpList = resp.data
           that.total = resp.data.length
-          
-          // 为每条记录生成随机时间
-          that.tmpList.forEach(item => {
-            item.updateTime = that.generateRandomTime()
-          })
-          
           let start = 0, end = that.pageSize
           let length = that.tmpList.length
           let ans = (end < length) ? end : length
