@@ -27,7 +27,7 @@
           label="教师名称"
           width="150">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
           label="操作"
           width="100">
         <template slot-scope="scope">
@@ -42,7 +42,7 @@
             <el-button slot="reference" type="text" size="small">删除</el-button>
           </el-popconfirm>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <el-pagination
         background
