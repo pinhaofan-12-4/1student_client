@@ -29,8 +29,8 @@
       </el-table-column>
       <el-table-column
           prop="updateTime"
-          label="更新时间"
-          width="180">
+          label="上课时间"
+          width="150">
       </el-table-column>
       <!-- <el-table-column
           label="操作"
@@ -124,20 +124,14 @@ export default {
     },
     // 生成随机日期时间字符串
     generateRandomTime() {
-      // 生成过去六个月内的随机日期
-      const now = new Date()
-      const sixMonthsAgo = new Date(now.getTime() - (180 * 24 * 60 * 60 * 1000))
-      const randomTime = new Date(sixMonthsAgo.getTime() + Math.random() * (now.getTime() - sixMonthsAgo.getTime()))
+      // 生成星期一到星期五随机一天，以及随机时间点
+      const weekdays = ['一', '二', '三', '四', '五'];
+      const hours = ['八点', '九点', '十点', '十一点', '一点', '二点', '三点', '四点'];
       
-      // 格式化日期时间为 YYYY-MM-DD HH:MM:SS
-      const year = randomTime.getFullYear()
-      const month = String(randomTime.getMonth() + 1).padStart(2, '0')
-      const day = String(randomTime.getDate()).padStart(2, '0')
-      const hours = String(randomTime.getHours()).padStart(2, '0')
-      const minutes = String(randomTime.getMinutes()).padStart(2, '0')
-      const seconds = String(randomTime.getSeconds()).padStart(2, '0')
+      const randomWeekday = weekdays[Math.floor(Math.random() * weekdays.length)];
+      const randomHour = hours[Math.floor(Math.random() * hours.length)];
       
-      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+      return `星期${randomWeekday}${randomHour}`;
     }
   },
 
