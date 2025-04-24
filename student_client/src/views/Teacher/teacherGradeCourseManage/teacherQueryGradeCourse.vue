@@ -210,7 +210,11 @@ export default {
           })
           that.batchInputVisible = false
           // 刷新成绩列表
-          that.$refs.teacherGradeCourseList.loadData()
+          // 由于组件没有loadData方法，改为触发ruleForm的watch机制来刷新数据
+          that.$nextTick(() => {
+            // 创建一个新的对象引用来触发watch
+            that.ruleForm = { ...that.ruleForm }
+          })
         } else {
           that.$message({
             showClose: true,
